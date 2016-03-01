@@ -8,7 +8,7 @@ import java.util.Arrays;
 public class Zamowienie {
     private int maksRozmiar;
     private Pozycja[] pozycje;
-    private int ileDodanych;
+    private int ileDodanych=0;
 
 
     public Zamowienie() {
@@ -23,20 +23,65 @@ public class Zamowienie {
     }
 
     public void dodajPozycje(Pozycja p){
-        if (ileDodanych<=maksRozmiar){
+        boolean wstaw = false;
+        if (ileDodanych>0){
+           for(int i=0; i<ileDodanych; i++) {
+               if (pozycje[i].getNazwaTowaru() == p.getNazwaTowaru()){
+                   pozycje[i].setCena(p.getCena()+ pozycje[i].getCena());
+                   pozycje[i].setIleSztuk(p.getIleSztuk() + pozycje[i].getIleSztuk());
+               }else { wstaw=true;}
+           }
+        } else {pozycje[ileDodanych] = p;
+            ileDodanych++;}
+        if (wstaw==true){
+        if (ileDodanych<=maksRozmiar) {
             pozycje[ileDodanych] = p;
-            ileDodanych++;
-        } else{System.out.println(" Nie można dodać wiecej pozycji");}
-
+            ileDodanych++;}
+        }
     }
 
-    public double obliczWartosc(){
+    public double obliczWartosc() {
+        double suma = 0;
+        for (int i = 0; i < ileDodanych; i++) {
+            suma = suma + pozycje[i].obliczWartosc();
+        }
+        return suma;
+    }
+    public double obliczWartoscRabatu(){
         double suma=0;
         for(int i=0; i<ileDodanych; i++){
-            suma= suma + pozycje[i].obliczWartosc();
+            suma= suma + pozycje[i].obliczWartoscRabatu();
         }
         return suma;
 
+    }
+    public double obliczWartoscZRabatem(){
+        double suma=0;
+        for(int i=0; i<ileDodanych; i++){
+            suma= suma + pozycje[i].obliczWartoscZRabatem();
+        }
+        return suma;
+
+    }
+    public void usunPozycje(int index){
+        for (int i=index-1; i<=ileDodanych; i++){
+         if (i==ileDodanych){
+             pozycje[i]= null;
+             ileDodanych--;
+         }else
+             pozycje[i]= pozycje[i+1];
+        }
+    }
+    public void edytujPozycje(int index, String nazwaTowaru, double cena, int ileSztuk){
+        System.out.println("Zmieniono pozycję");
+        System.out.println(pozycje[index-1]);
+        //pozycje[index].toString();
+        pozycje[index-1].setNazwaTowaru(nazwaTowaru);
+        pozycje[index-1].setCena(cena);
+        pozycje[index-1].setIleSztuk(ileSztuk);
+        System.out.println("Na pozycję");
+        System.out.println(pozycje[index-1]);
+        //pozycje[index].toString();
     }
     @Override
     public String toString() {
@@ -45,7 +90,8 @@ public class Zamowienie {
         for(int i=0; i<ileDodanych; i++) {
             wyswietl = wyswietl+ "%n" + pozycje[i].toString();
         }
-        wyswietl = wyswietl+ "%nRazem: " + String.format("%8.2f", obliczWartosc()) +"zł";
+        wyswietl = wyswietl+ "%n%nRazem: " + String.format("%68.2f zł %15.2f zł %10.2f zł",
+                obliczWartosc(), obliczWartoscRabatu(),obliczWartoscZRabatem());
         return String.format( wyswietl);
         }
 }
