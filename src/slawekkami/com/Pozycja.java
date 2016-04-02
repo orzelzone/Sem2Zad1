@@ -69,7 +69,8 @@ public class Pozycja implements Serializable {
     @Override
     public String toString() {
         return String.format("%-40s %10.2f zł %4d szt. %10.2f zł %4d proc %5.2f zł %10.2f zł",
-                nazwaTowaru, cena, ileSztuk, obliczWartosc(), obliczRabat(), obliczWartoscRabatu(), obliczWartoscZRabatem());
+                nazwaTowaru, cena, ileSztuk, obliczWartosc(), obliczRabat(),
+                obliczWartoscRabatu(), obliczWartoscZRabatem());
     }
 
 

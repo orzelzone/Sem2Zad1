@@ -103,17 +103,15 @@ public class Zamowienie implements Serializable {
                 obliczWartosc(), obliczWartoscRabatu(), obliczWartoscZRabatem());
         return String.format(wyswietl);
     }
-    public static void zapiszZamowienie(Zamowienie z, String nazwaPliku)throws IOException, ClassNotFoundException{
+
+    public static void zapiszZamowienie(Zamowienie z, String nazwaPliku) throws IOException, ClassNotFoundException {
         ObjectOutputStream plikZamowienia = new ObjectOutputStream(new FileOutputStream(nazwaPliku));
         plikZamowienia.writeObject(z);
     }
 
-    public  Zamowienie wczytajZamowienie(String nazwaPliku) throws IOException, ClassNotFoundException{
-        //Zamowienie z = new Zamowienie();
-        ObjectInputStream plikZamowienia = new ObjectInputStream(new FileInputStream(nazwaPliku));
-        //Zamowienie z =new Zamowienie(maksRozmiar);
-        return (Zamowienie)plikZamowienia.readObject();
-        //return z;
+    public Zamowienie wczytajZamowienie(String nazwaPliku) throws IOException, ClassNotFoundException {
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(nazwaPliku));
+        return (Zamowienie) ois.readObject();
 
     }
 }

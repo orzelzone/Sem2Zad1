@@ -1,10 +1,11 @@
 package slawekkami.com;
 
 import java.io.IOException;
+import java.io.Serializable;
 
-public class Main {
+public class Main implements Serializable {
 
-    public static void main(String[] args)  throws IOException, ClassNotFoundException{
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         // write your code here
         Pozycja poz1 = new Pozycja("t1", 1, 3);
         Pozycja poz2 = new Pozycja("t2", 2, 3);
@@ -13,7 +14,7 @@ public class Main {
         Pozycja poz5 = new Pozycja("t5", 5, 3);
         System.out.println(poz1);
         System.out.println(poz2);
-        Zamowienie z = new Zamowienie(10);
+        Zamowienie z = new Zamowienie();
         z.dodajPozycje(poz1);
         z.dodajPozycje(poz2);
         z.dodajPozycje(poz3);
@@ -26,9 +27,8 @@ public class Main {
         System.out.println(z);
         z.edytujPozycje(2, "zmienionaNazwa", 4.50, 17);
         System.out.println(z);
-        z.zapiszZamowienie(z,"zam.dat");
-        Zamowienie z2 = new Zamowienie(10);
-        z2.wczytajZamowienie("zam.dat");
+        z.zapiszZamowienie(z, "zam.dat");
+        Zamowienie z2 = new Zamowienie().wczytajZamowienie("zam.dat");
         System.out.println("to jest zamowiennie z2");
         System.out.println(z2);
 
